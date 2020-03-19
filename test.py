@@ -20,13 +20,13 @@ def test(url, rotate=False):
 			img = img.rotate(180)
 			img.save(img_path)
 			img.save('tmp_image/%s.jpg' % index)
-			
-	group = [InputMediaPhoto(open(imgs[0], 'rb'), caption=cap, parse_mode='Markdown')] + \
+		
+	if imgs:	
+		group = [InputMediaPhoto(open(imgs[0], 'rb'), caption=cap, parse_mode='Markdown')] + \
 		[InputMediaPhoto(open(x, 'rb')) for x in imgs[1:]]
-	if group:
 		tele.bot.send_media_group(-1001198682178, group, timeout = 20*60)
 	else:
-		tele.bot.send_message(-1001198682178, cap, timeout = 20*60)
+		tele.bot.send_message(-1001198682178, cap, parse_mode='Markdown')
 	
 if __name__=='__main__':
 	test('https://twitter.com/usabignews/status/1240447170509189121')

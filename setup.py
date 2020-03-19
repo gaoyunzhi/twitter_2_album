@@ -25,6 +25,7 @@ setuptools.setup(
         'pic_cut',
         'bs4',
         'lxml',
+        'tweepy'
     ],
     python_requires='>=3.0',
 )
