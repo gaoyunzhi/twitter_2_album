@@ -20,7 +20,7 @@ setuptools.setup(
     ],
     install_requires=[
         'pyyaml',
-        'web_2_album',
+        'telegram_util',
         'tweepy'
     ],
     python_requires='>=3.0',

@@ -4,7 +4,7 @@
 name = 'twitter_2_album'
 
 import yaml
-from web_2_album import Result
+from telegram_util import AlbumResult as Result
 import tweepy
 
 prefix = 'https://m.twitter.cn/statuses/show?id='
