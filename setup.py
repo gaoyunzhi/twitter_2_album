@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="twitter_2_album",
-    version="0.0.1",
+    version="0.0.3",
     author="Yunzhi Gao",
     author_email="gaoyunzhi@gmail.com",
     description="Return photo list and caption (markdown format) from twitter.",
@@ -19,12 +19,8 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-        'cached_url',
         'pyyaml',
-        'telegram_util',
-        'pic_cut',
-        'bs4',
-        'lxml',
+        'web_2_album'
         'tweepy'
     ],
     python_requires='>=3.0',

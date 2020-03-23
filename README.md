@@ -6,7 +6,9 @@ Return photo list and caption (markdown format) from twitter.
 
 ```
 import twitter_2_album
-photo_filename_list, caption = twitter_2_album.get(url)
+result = twitter_2_album.get(url)
+result.imgs
+result.cap
 ```
 
 ## how to install

@@ -3,14 +3,8 @@
 
 name = 'twitter_2_album'
 
-import math
-import os
-import cached_url
-import re
 import yaml
-from telegram_util import cutCaption
-import pic_cut
-from bs4 import BeautifulSoup
+from web_2_album import Result
 import tweepy
 
 prefix = 'https://m.twitter.cn/statuses/show?id='
@@ -27,23 +21,24 @@ def getTid(path):
 		path = path[:index]
 	return path.split('/')[-1]
 
-def getCap(status, path, cap_limit):
+def getCap(status):
 	text = list(status.text)
 	for x in status.entities.get('media', []):
 		for pos in range(x['indices'][0], x['indices'][1]):
 			text[pos] = ''
-	suffix = ' [%s](%s)' % (status.user.name, path)	
-	return cutCaption(''.join(text), suffix, cap_limit)
+	text = ''.join(text)
+	text = text.replace('  ', ' ')
+	return text
 
-def getImages(status, image_limit):
+def getImgs(status):
 	# TODO: support video as well...
-	raw = [x['media_url'] for x in status.entities.get('media', []) 
+	return [x['media_url'] for x in status.entities.get('media', []) 
 		if x['type'] == 'photo']
-	return pic_cut.getCutImages(raw, image_limit)
 
-def get(path, cap_limit = 1000, text_limit = 4000, img_limit = 9):
+def get(path):
 	tid = getTid(path)
 	status = twitterApi.get_status(tid)
-	imgs = getImages(status, img_limit)
-	cap = getCap(status, path, cap_limit if imgs else text_limit)
-	return imgs, cap
+	r = Result()
+	r.imgs = getImgs(status)
+	r.cap = getCap(status)
+	return r
