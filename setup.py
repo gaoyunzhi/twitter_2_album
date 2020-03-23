@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="twitter_2_album",
-    version="0.0.3",
+    version="0.0.4",
     author="Yunzhi Gao",
     author_email="gaoyunzhi@gmail.com",
     description="Return photo list and caption (markdown format) from twitter.",
@@ -20,7 +20,7 @@ setuptools.setup(
     ],
     install_requires=[
         'pyyaml',
-        'web_2_album'
+        'web_2_album',
         'tweepy'
     ],
     python_requires='>=3.0',
