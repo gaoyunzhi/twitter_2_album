@@ -16,5 +16,4 @@ def test(url, rotate=False):
 	album_sender.send(chat, url, r, rotate = rotate)
 	
 if __name__=='__main__':
-	test('https://twitter.com/usabignews/status/1240447170509189121')
-	test('https://twitter.com/usabignews/status/1239353502146744320')
+	test('https://twitter.com/iingwen/status/1248561211119034369?s=21')

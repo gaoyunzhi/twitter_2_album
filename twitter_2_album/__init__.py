@@ -7,8 +7,6 @@ import yaml
 from telegram_util import AlbumResult as Result
 import tweepy
 
-prefix = 'https://m.twitter.cn/statuses/show?id='
-
 with open('CREDENTIALS') as f:
 	CREDENTIALS = yaml.load(f, Loader=yaml.FullLoader)
 auth = tweepy.OAuthHandler(CREDENTIALS['twitter_consumer_key'], CREDENTIALS['twitter_consumer_secret'])
@@ -31,7 +29,7 @@ def getCap(status):
 	return text
 
 def getImgs(status):
-	# TODO: support video as well...
+	# seems video is not returned in side the json, there is nothing we can do...
 	return [x['media_url'] for x in status.entities.get('media', []) 
 		if x['type'] == 'photo']
 
