@@ -28,15 +28,23 @@ def getCap(status):
 	text = text.replace('  ', ' ')
 	return text
 
+def getEntities(status):
+	try:
+		return status.extended_entities
+	except:
+		return status.entities
+
 def getImgs(status):
+	if not status:
+		return []
 	# seems video is not returned in side the json, there is nothing we can do...
-	return [x['media_url'] for x in status.entities.get('media', []) 
+	return [x['media_url'] for x in getEntities(status).get('media', [])
 		if x['type'] == 'photo']
 
 def get(path):
 	tid = getTid(path)
 	status = twitterApi.get_status(tid)
 	r = Result()
-	r.imgs = getImgs(status)
+	r.imgs = getImgs(status) or getImgs(status.quoted_status)
 	r.cap = getCap(status)
 	return r
