@@ -41,10 +41,18 @@ def getImgs(status):
 	return [x['media_url'] for x in getEntities(status).get('media', [])
 		if x['type'] == 'photo']
 
+
+def getQuoteImgs(status):
+	try:
+		status.quoted_status
+	except:
+		return []
+	return getImgs(status.quoted_status)
+
 def get(path):
 	tid = getTid(path)
 	status = twitterApi.get_status(tid)
 	r = Result()
-	r.imgs = getImgs(status) or getImgs(status.quoted_status)
+	r.imgs = getImgs(status) or getQuoteImgs(status)
 	r.cap = getCap(status)
 	return r
