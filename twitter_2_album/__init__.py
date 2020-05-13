@@ -5,7 +5,10 @@ name = 'twitter_2_album'
 
 import yaml
 from telegram_util import AlbumResult as Result
+from telegram_util import compactText
 import tweepy
+import json
+import html
 
 with open('CREDENTIALS') as f:
 	CREDENTIALS = yaml.load(f, Loader=yaml.FullLoader)
@@ -20,12 +23,12 @@ def getTid(path):
 	return path.split('/')[-1]
 
 def getCap(status):
-	text = list(status.text)
+	text = list(status.full_text)
 	for x in status.entities.get('media', []):
 		for pos in range(x['indices'][0], x['indices'][1]):
 			text[pos] = ''
-	text = ''.join(text)
-	text = text.replace('  ', ' ')
+	text = html.unescape(''.join(text))
+	text = compactText(text)
 	return text
 
 def getEntities(status):
@@ -51,7 +54,7 @@ def getQuoteImgs(status):
 
 def get(path):
 	tid = getTid(path)
-	status = twitterApi.get_status(tid)
+	status = twitterApi.get_status(tid, tweet_mode="extended")
 	r = Result()
 	r.imgs = getImgs(status) or getQuoteImgs(status)
 	r.cap = getCap(status)
