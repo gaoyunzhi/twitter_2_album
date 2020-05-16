@@ -10,10 +10,11 @@ with open('CREDENTIALS') as f:
 	CREDENTIALS = yaml.load(f, Loader=yaml.FullLoader)
 tele = Updater(CREDENTIALS['bot_token'], use_context=True)
 chat = tele.bot.get_chat(-1001198682178)
+chat = tele.bot.get_chat('@web_record')
 
 def test(url, rotate=False):
 	r = twitter_2_album.get(url)
 	album_sender.send(chat, url, r, rotate = rotate)
 	
 if __name__=='__main__':
-	test('https://twitter.com/dw_chinese/status/1260270767024947207')
+	test('https://twitter.com/ITAN_henshubu/status/1197747192137543680')
