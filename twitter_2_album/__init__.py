@@ -44,18 +44,29 @@ def getImgs(status):
 	return [x['media_url'] for x in getEntities(status).get('media', [])
 		if x['type'] == 'photo']
 
+def getVideo(status):
+	if not status:
+		return ''
+	videos = [x for x in getEntities(status).get('media', []) if x['type'] == 'video']
+	if not videos:
+		return ''
+	variants = [x for x in videos[0]['video_info']['variants'] if x['content_type'] == 'video/mp4']
+	variants = [(x.get('bitrate'), x) for x in variants]
+	variants.sort()
+	return variants[-1][1]['url']
 
-def getQuoteImgs(status):
+def getQuote(status, func):
 	try:
 		status.quoted_status
 	except:
-		return []
-	return getImgs(status.quoted_status)
+		return None
+	return func(status.quoted_status)
 
 def get(path):
 	tid = getTid(path)
 	status = twitterApi.get_status(tid, tweet_mode="extended")
 	r = Result()
-	r.imgs = getImgs(status) or getQuoteImgs(status)
+	r.video = getVideo(status) or getQuote(status, getVideo) or ''
+	r.imgs = getImgs(status) or getQuote(status, getImgs) or []
 	r.cap = getCap(status)
 	return r
