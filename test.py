@@ -18,4 +18,4 @@ def test(url, rotate=False):
 	album_sender.send_v2(chat, r, rotate = rotate)
 	
 if __name__=='__main__':
-	test('1262065343830257665')
+	test('1271826108866912258')

@@ -23,12 +23,19 @@ def getTid(path):
 	return path.split('/')[-1]
 
 def getCap(status):
+	print(status)
 	text = list(status.full_text)
 	for x in status.entities.get('media', []):
 		for pos in range(x['indices'][0], x['indices'][1]):
 			text[pos] = ''
 	text = html.unescape(''.join(text))
-	text = compactText(text)
+	# May need to revisit
+	for x in status.entities.get('urls', []):
+		if len(x['expanded_url']) < 30:
+			text = text.replace(x['url'], x['expanded_url'])
+		else:
+			text = text.replace(x['url'], '[%s](%s)' % ('link', x['expanded_url']))
+	text = compactText(html.unescape(text))
 	return text
 
 def getEntities(status):
@@ -69,6 +76,11 @@ def get(path):
 	r.video = getVideo(status) or getQuote(status, getVideo) or ''
 	r.imgs = getImgs(status) or getQuote(status, getImgs) or []
 	r.cap = getCap(status)
+	if r.cap.startswith('RT '):
+		try:
+			r.cap = getCap(status.retweeted_status)
+		except:
+			...
 	if matchKey(path, ['twitter', 'http']):
 		r.url = path
 	else:
