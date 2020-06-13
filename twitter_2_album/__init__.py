@@ -23,7 +23,6 @@ def getTid(path):
 	return path.split('/')[-1]
 
 def getCap(status):
-	print(status)
 	text = list(status.full_text)
 	for x in status.entities.get('media', []):
 		for pos in range(x['indices'][0], x['indices'][1]):
