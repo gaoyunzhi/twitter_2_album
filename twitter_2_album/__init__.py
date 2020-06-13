@@ -64,9 +64,14 @@ def getVideo(status):
 def getQuote(status, func):
 	try:
 		status.quoted_status
+		return func(status.quoted_status)
 	except:
-		return None
-	return func(status.quoted_status)
+		...
+	try:
+		status.retweeted_status
+		return func(status.retweeted_status)
+	except:
+		...
 
 def get(path):
 	tid = getTid(path)
