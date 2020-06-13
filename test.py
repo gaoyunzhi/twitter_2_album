@@ -15,7 +15,7 @@ chat = tele.bot.get_chat('@web_record')
 def test(url, rotate=False):
 	r = twitter_2_album.get(url)
 	print(r)
-	album_sender.send(chat, url, r, rotate = rotate)
+	album_sender.send_v2(chat, r, rotate = rotate)
 	
 if __name__=='__main__':
-	test('https://twitter.com/LeagueOfLegends/status/1262065343830257665')
+	test('1262065343830257665')

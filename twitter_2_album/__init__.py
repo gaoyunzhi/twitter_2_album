@@ -72,5 +72,6 @@ def get(path):
 	if matchKey(path, ['twitter', 'http']):
 		r.url = path
 	else:
-		r.url = 'http://twitter.com/status/' + tid
+		r.url = 'http://twitter.com/%s/status/%s' % (
+			status.user.screen_name or status.user.id, tid)
 	return r
