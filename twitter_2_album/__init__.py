@@ -5,7 +5,7 @@ name = 'twitter_2_album'
 
 import yaml
 from telegram_util import AlbumResult as Result
-from telegram_util import compactText
+from telegram_util import compactText, matchKey
 import tweepy
 import json
 import html
@@ -69,4 +69,8 @@ def get(path):
 	r.video = getVideo(status) or getQuote(status, getVideo) or ''
 	r.imgs = getImgs(status) or getQuote(status, getImgs) or []
 	r.cap = getCap(status)
+	if matchKey(path, ['twitter', 'http']):
+		r.url = path
+	else:
+		r.url = 'http://twitter.com/status/' + tid
 	return r
