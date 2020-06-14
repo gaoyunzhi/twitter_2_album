@@ -62,23 +62,30 @@ def getVideo(status):
 	return variants[-1][1]['url']
 
 def getQuote(status, func):
+	result = func(status)
 	try:
-		status.quoted_status
-		return func(status.quoted_status)
+		result = result or func(status.quoted_status)
 	except:
 		...
+
 	try:
-		status.retweeted_status
-		return func(status.retweeted_status)
+		result = result or func(status.retweeted_status)
 	except:
 		...
+
+	try:
+		result = result or func(status.retweeted_status.quoted_status)
+	except:
+		...
+
+	return result
 
 def get(path):
 	tid = getTid(path)
 	status = twitterApi.get_status(tid, tweet_mode="extended")
 	r = Result()
-	r.video = getVideo(status) or getQuote(status, getVideo) or ''
-	r.imgs = getImgs(status) or getQuote(status, getImgs) or []
+	r.video = getQuote(status, getVideo) or ''
+	r.imgs = getQuote(status, getImgs) or []
 	r.cap = getCap(status)
 	if r.cap.startswith('RT '):
 		try:
