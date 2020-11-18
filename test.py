@@ -18,4 +18,4 @@ def test(url, rotate=False):
 	album_sender.send_v2(chat, r, rotate = rotate)
 	
 if __name__=='__main__':
-	test('https://twitter.com/yesthatbij/status/1272056813723062272')
+	test('1329067985668071435')
