@@ -15,7 +15,7 @@ chat = tele.bot.get_chat(-1001198682178)
 def test(url, rotate=False):
 	r = twitter_2_album.get(url)
 	print(r)
-	album_sender.send_v2(chat, r, rotate = rotate)
+	# album_sender.send_v2(chat, r, rotate = rotate)
 	
 if __name__=='__main__':
-	test('1329067985668071435')
+	test('1352741846049378304')
